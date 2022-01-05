@@ -68,8 +68,8 @@ async function getUsers(req, res) {
 // GET USER STATS
 async function getStats(req, res) {
     const date = new Date();
-
     const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
+
     try {
         const data = await User.aggregate([
             {
@@ -91,19 +91,16 @@ async function getStats(req, res) {
         ]);
 
         res.status(200).json(data);
-
     } catch (error) {
         res.status(500).json(error);
     }
-
-
 }
 
 router.put('/:id', verifyTokenAndAuthtorization, updateUser);
 router.delete('/:id', verifyTokenAndAdmin, deleteUser);
 router.get('/find/:id', verifyTokenAndAdmin, getUser);
 router.get('/', verifyTokenAndAdmin, getUsers);
-router.get('/stats', verifyTokenAndAdmin, getStats)
+router.get('/stats', verifyTokenAndAdmin, getStats);
 
 export default router;
 
